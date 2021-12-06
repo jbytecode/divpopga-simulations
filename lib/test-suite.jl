@@ -92,7 +92,8 @@ end
 function cec6(x::Array{Float64, 1})::Float64
 
     d = 1
-    D = length(x)
+    L = length(x)
+    D = L
     s = abs(1-(1/(2 * sqrt(D + 20) - 8.2)))
     m0 = 2.5
     m1 = -1 * sqrt((m0^2-d)/s)
@@ -100,7 +101,7 @@ function cec6(x::Array{Float64, 1})::Float64
     term1 = min(sum((x.-m1).^2) , d * D + s * sum((x.-m1).^2))
 
     term2 = 0
-    for i in 1:length(x)
+    for i in 1:L
 
         term2 = term2 + 1 - cos(2 * pi * (x[i] - m0))
 
@@ -120,10 +121,11 @@ end
 # LEVY FUNCTION
 function cec8(x::Array{Float64, 1})::Float64
 
+    L = length(x)
     term = sin(pi * cec8w(x[1]))^2
-    D = convert(Float64, length(x))
+    D = convert(Float64, L)
     
-    for i in 1:(length(x) - 1)
+    for i in 1:(L - 1)
 
         term = term + 
         (cec8w(x[i]) - 1)^2 * (1 + 10 * sin(pi * cec8w(x[i]) + 1)^2) + 
@@ -144,10 +146,11 @@ end
 # MODIFIED SCHWEFEL'S FUNCTION
 function cec9(x::Array{Float64, 1})::Float64
 
-    d = convert(Float64, length(x))
+    L = length(x)
+    d = convert(Float64, L)
     term = 0
 
-    for i in 1:length(x)
+    for i in 1:L
 
         z = x[i] + 420.9687462275036
         term = term + cec9g(z, d)
@@ -179,9 +182,10 @@ end
 # HIGH CONDITIONED ELLIPTIC FUNCTION
 function cec10(x::Array{Float64, 1})::Float64
 
-    d = convert(Float64, length(x))
+    L = length(x)
+    d = convert(Float64, L)
     term = 0
-    for i in 1:length(x)
+    for i in 1:L
 
         term = term + (10^6)^((i - 1)/(d - 1)) * x[i]^2
 
@@ -209,14 +213,15 @@ end
 # ACKLEY'S FUNCTION
 function cec12(x::Array{Float64, 1})::Float64
 
-    d = convert(Float64, length(x))
+    L = length(x)
+    d = convert(Float64, L)
     term1 = 0
-    for i in 1:length(x)
+    for i in 1:L
         term1 = term1 + x[i]^2
     end
 
     term2 = 0
-    for i in 1:length(x)
+    for i in 1:L
         term2 = term2 + cos(2 * pi * x[i])
     end
 
@@ -227,13 +232,14 @@ end
 # WEIERSTRASS FUNCTION
 function cec13(x::Array{Float64, 1})::Float64
 
+    L = length(x)
     a = 0.5
     b = 3
     kmax = 20
-    d = convert(Float64, length(x))
+    d = convert(Float64, L)
 
     term3 = 0
-    for i in 1:length(x)
+    for i in 1:L
 
         term1 = 0
         for k in 0:kmax
@@ -260,15 +266,17 @@ end
 # GRIEWANK'S FUNCTION
 function cec14(x::Array{Float64, 1})::Float64
 
+    L = length(x)
+
     term1 = 0
-    for i in 1:length(x)
+    for i in 1:L
 
         term1 = term1 + (x[i]^2 / 4000)
 
     end
 
     term2 = 1
-    for i in 1:length(x)
+    for i in 1:L
 
         term2 = term2 * cos(x[i]/sqrt(i))
 
@@ -281,9 +289,10 @@ end
 # KATSUURA FUNCTION
 function cec15(x::Array{Float64, 1})::Float64
 
-    d = convert(Float64, length(x))
+    L = length(x)
+    d = convert(Float64, L)
     term1 = 1
-    for i in 1:length(x)
+    for i in 1:L
 
         term2 = 0
         for j in 1:32
@@ -304,13 +313,15 @@ end
 function cec16(x::Array{Float64, 1})::Float64
 
     d = convert(Float64, length(x))
+    L = length(x)
+
     term1 = 0
-    for i in 1:length(x)
+    for i in 1:L
         term1 = term1 + x[i]
     end
 
     term2 = 0
-    for i in 1:length(x)
+    for i in 1:L
         term2 = term2 + x[i]^2
     end
 
@@ -321,14 +332,15 @@ end
 # HGBAT FUNCTION
 function cec17(x::Array{Float64, 1})::Float64
 
-    d = convert(Float64, length(x))
+    L = length(x)
+    d = convert(Float64, L)
     term1 = 0
-    for i in 1:length(x)
+    for i in 1:L
         term1 = term1 + x[i]
     end
 
     term2 = 0
-    for i in 1:length(x)
+    for i in 1:L
         term2 = term2 + x[i]^2
     end
 
@@ -342,28 +354,30 @@ function cec18(x::Array{Float64, 1})::Float64
     # f7: cec6
     # f4: cec3
 
+    L = length(x)
     term = 0
-    for i in 1:(length(x)-1)
+    for i in 1:(L - 1)
 
         term = term + cec6([cec3([x[i], x[i+1]])])
 
     end
 
-    return term + cec6([cec3([x[length(x)], x[1]])])
+    return term + cec6([cec3([x[L], x[1]])])
 
 end
 
 # SCHAFFER'S F7 FUNCTION
 function cec19(x::Array{Float64, 1})::Float64
 
+    L = length(x)
     term = 0
-    for i in 1:(length(x)-1)
+    for i in 1:(L-1)
 
         term = term + sqrt(cec19s(x[i], x[i+1])) * sin(50 * cec19s(x[i], x[i+1])^0.2)
 
     end
 
-    return ((1/(length(x)-1)) * term)^2
+    return ((1.0 / (L - 1.0)) * term)^2
 
 end
 
