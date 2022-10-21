@@ -28,6 +28,8 @@ num_elitists = 2
 lowerbound = -100.0
 upperbound = 100.0
 numV = 10
+lowers = repeat([lowerbound], outer = numV)
+uppers = repeat([upperbound], outer = numV)
 
 # THE FUNCTIONS
 costfn = cec1
@@ -39,8 +41,8 @@ mutatefn  = CLGA.makenormalmutation(mutationParameter1, mutationParameter2)
 res_ga = CLGA.ga(
     popsize,
     generations,
-    repeat([lowerbound], outer=numV),      
-    repeat([upperbound], outer=numV),      
+    lowers,      
+    uppers,      
     costfn,     
     crossfn,    
     mutatefn,   
@@ -52,8 +54,8 @@ res_ga = CLGA.ga(
 res_kmeans = CLGA.ga(
     popsize,    
     generations,
-    repeat([lowerbound], outer=numV),      
-    repeat([upperbound], outer=numV),      
+    lowers,      
+    uppers,      
     costfn,     
     crossfn,    
     mutatefn,   
@@ -65,8 +67,8 @@ res_kmeans = CLGA.ga(
 res_kmeanssim = CLGA.ga(
     popsize,    
     generations,
-    repeat([lowerbound], outer=numV),      
-    repeat([upperbound], outer=numV),      
+    lowers,      
+    uppers,      
     costfn,     
     crossfn,    
     mutatefn,   
@@ -75,10 +77,10 @@ res_kmeanssim = CLGA.ga(
 )
 
 # DE 
-res_de = Metaheuristics.optimize(costfn, [lowers uppers], DE())
+res_de = Metaheuristics.optimize(costfn, [lowers uppers], Metaheuristics.DE())
 
 # PSO 
-res_pso = Metaheuristics.optimize(costfn, [lowers uppers], PSO())
+res_pso = Metaheuristics.optimize(costfn, [lowers uppers], Metaheuristics.PSO())
 
 # MCCGA 
-res_mccga = Metaheuristics.optimize(costfn, [lowers uppers], MCCGA())
+res_mccga = Metaheuristics.optimize(costfn, [lowers uppers], Metaheuristics.MCCGA())
